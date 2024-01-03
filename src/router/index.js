@@ -1,13 +1,34 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+import layout from '@/layout/layout';
+
+const constantRoutes = [
+  {
+    path: '/',
+    component: () => import('@/views/splash/splash')
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/login/login')
+  }
+];
+
+const asyncRoutes = [
+  {
+    path: '/bot',
+    component: layout,
+    children: [
+      {
+        path: 'message',
+        component: () => import('@/views/message/message')
+      }
+    ]
+  }
+];
+
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/login',
-      component: () => import('@/views/login/login')
-    }
-  ]
+  routes: constantRoutes.concat(asyncRoutes)
 });
 
 export default router;

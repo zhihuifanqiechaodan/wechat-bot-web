@@ -9,43 +9,64 @@
       <h1 class="login-title">扫码登录</h1>
       <div class="login-subheading">请使用微信移动端扫码二维码</div>
       <div class="qrcode-box">
-        <QrcodeVue :value="qrcode" :size="200" />
+        <QrcodeVue :value="botStore.qrcode" :size="200" />
+        <div
+          v-if="!botStore.processStatus"
+          @click="startPrecess"
+          class="mask-wrapper"
+        >
+          <icon-refresh class="icon-refresh" />
+          <div class="mask-title">Restart</div>
+        </div>
       </div>
     </div>
-    <div class="setting-wrapper">
-      <a-button @click="openPuppetServicesModal" type="primary">
-        <template #icon>
-          <icon-settings />
-        </template>
-        <template #default>Puppet Service</template>
-      </a-button>
-    </div>
+    <a-space class="setting-wrapper">
+      <a-tooltip content="二维码失效或服务异常时重新启动">
+        <a-button @click="startPrecess" :loading="loading" type="primary">
+          <template #icon>
+            <icon-sync />
+          </template>
+          <template #default>Restart</template>
+        </a-button>
+      </a-tooltip>
+    </a-space>
   </div>
-
-  <a-modal v-model:visible="puppetServicesModalVisible" @ok="handleOk">
-    <template #title> Title </template>
-    <div>
-      You can customize modal body text by the current situation. This modal
-      will be closed immediately once you press the OK button.
-    </div>
-  </a-modal>
 </template>
 
 <script setup>
 import LottieWeb from '@/components/LottieWeb.vue';
 import animationData from '@/lotties/wechat.lottie.json';
 import QrcodeVue from 'qrcode.vue';
-import { ref } from 'vue';
-import { IconSettings } from '@arco-design/web-vue/es/icon';
+import { IconSync, IconRefresh } from '@arco-design/web-vue/es/icon';
+import { addBotStart, getBotAuthQrcode } from '@/api/bot.api';
+import { useBotStore } from '@/store/bot';
+import loadingHook from '@/hooks/loading.hook';
+import { onMounted } from 'vue';
 
-const qrcode = ref('');
+const { loading, setLoading } = loadingHook();
 
-const puppetServicesModalVisible = ref(false);
-const openPuppetServicesModal = () => {
-  puppetServicesModalVisible.value = true;
+const botStore = useBotStore();
+
+const startPrecess = async () => {
+  setLoading(true);
+
+  try {
+    await addBotStart();
+
+    botStore.setProcessStatus({ processStatus: true });
+  } catch (error) {
+    console.log('🚀 ~ file: login.vue:51 ~ startPrecess ~ error:', error);
+  } finally {
+    setLoading(false);
+  }
 };
 
-const handleOk = () => {};
+onMounted(async () => {
+  if (botStore.processStatus) {
+    const { qrcode } = await getBotAuthQrcode();
+    botStore.setQrcode({ qrcode });
+  }
+});
 </script>
 
 <style lang="less" scoped>
@@ -93,7 +114,34 @@ const handleOk = () => {};
     }
 
     .qrcode-box {
-      padding: 40px 0;
+      position: relative;
+      margin: 40px;
+      padding: 10px;
+      border-radius: 10px;
+      overflow: hidden;
+
+      .mask-wrapper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+
+        .icon-refresh {
+          font-size: 40px;
+        }
+
+        .mask-title {
+          padding-top: 10px;
+          font-size: 18px;
+        }
+      }
     }
   }
 
