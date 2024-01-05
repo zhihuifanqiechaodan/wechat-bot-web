@@ -32,5 +32,8 @@ module.exports = {
     semi: ['error', 'always'],
     '@typescript-eslint/no-explicit-any': 'off',
     'vue/multi-word-component-names': 'off'
+  },
+  globals: {
+    process: true
   }
 };

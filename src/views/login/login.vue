@@ -132,6 +132,7 @@ onMounted(async () => {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.7);
         color: #fff;
+        cursor: pointer;
 
         .icon-refresh {
           font-size: 40px;

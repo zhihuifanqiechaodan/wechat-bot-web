@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useBotStore } from '@/store/bot';
+import { Message } from '@arco-design/web-vue';
 
 // 业务请求
 const request = axios.create({
@@ -61,6 +62,8 @@ request.interceptors.response.use(
   },
   (error) => {
     console.log('🚀 ~ file: request.js:80 ~ error:', error);
+
+    Message.error(error.message);
 
     return Promise.reject(error);
   }

@@ -10,7 +10,14 @@ import socketIoClient from '@/utils/socket.io-client';
 
 import { createPinia } from 'pinia';
 
+import { Message } from '@arco-design/web-vue';
+import '@arco-design/web-vue/es/message/style/css';
+
+import 'virtual:svg-icons-register';
+
 const app = createApp(App);
+
+Message._context = app._context;
 
 app
   .use(socketIoClient, {

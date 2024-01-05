@@ -13,7 +13,7 @@ const router = useRouter();
 
 setTimeout(() => {
   router.replace('/login');
-}, 2 * 1000);
+}, 1 * 1000);
 </script>
 
 <style lang="less" scoped>

@@ -36,7 +36,30 @@ currentInstance.proxy.$socket.on('onLogin', ({ botPayload }) => {
 });
 
 currentInstance.proxy.$socket.on('onMessage', ({ messageInfo }) => {
-  console.log(messageInfo);
+  if (botStore.messageHistoryInfo[messageInfo.contactId]) {
+    botStore.messageHistoryInfo[messageInfo.contactId].push(messageInfo);
+  } else {
+    botStore.messageHistoryInfo[messageInfo.contactId] = [messageInfo];
+  }
+
+  const messageIndex = botStore.messageList.findIndex(
+    (item) => item.contactId === messageInfo.contactId
+  );
+
+  if (botStore.currentMessageInfo?.contactId === messageInfo.contactId) {
+    messageInfo.unreadMessageCount = 0;
+  } else {
+    messageInfo.unreadMessageCount =
+      (botStore.messageList[messageIndex]?.unreadMessageCount || 0) + 1;
+  }
+
+  if (messageIndex !== -1) {
+    botStore.messageList.splice(messageIndex, 1);
+
+    botStore.messageList.unshift(messageInfo);
+  } else {
+    botStore.messageList.unshift(messageInfo);
+  }
 });
 
 currentInstance.proxy.$socket.on('stopProcess', () => {

@@ -1,12 +1,13 @@
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100vw;
   height: 100vh;
 }
 
 #app {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,4 +16,23 @@ body {
   margin: auto;
   border-radius: 10px;
   overflow: hidden;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ellipsis--l2 {
+  -webkit-line-clamp: 2;
+}
+.ellipsis--l2,
+.ellipsis--l3 {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ellipsis--l3 {
+  -webkit-line-clamp: 3;
 }

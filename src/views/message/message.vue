@@ -1,7 +1,18 @@
 <template>
-  <div class="message-container">消息</div>
+  <div class="message-container">
+    <MessageList />
+    <MessageContent />
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import MessageList from './components/MessageList.vue';
+import MessageContent from './components/MessageContent.vue';
+</script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped>
+.message-container {
+  display: flex;
+  height: 100%;
+}
+</style>

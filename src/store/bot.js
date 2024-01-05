@@ -1,11 +1,16 @@
 import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core';
 
 export const useBotStore = defineStore('bot', {
   state: () => {
     return {
       processStatus: false,
       qrcode: '',
-      botInfo: null
+      botInfo: useStorage('botPayload', {}).value,
+      messageList: [],
+      messageHistoryInfo: {},
+      currentMessageInfo: null,
+      currentMessageHistoryList: []
     };
   },
   actions: {
@@ -35,6 +40,8 @@ export const useBotStore = defineStore('bot', {
      */
     setBotInfo({ botInfo }) {
       this.botInfo = botInfo;
+
+      useStorage('botPayload', botInfo).value = botInfo;
     }
   }
 });

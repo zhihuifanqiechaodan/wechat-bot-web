@@ -18,7 +18,6 @@ import { IconMessage } from '@arco-design/web-vue/es/icon';
   align-items: center;
   width: 70px;
   height: 100%;
-  background-color: red;
 
   .menu-item {
     display: flex;
