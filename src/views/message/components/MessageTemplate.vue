@@ -15,7 +15,7 @@
           : ''
       "
       class="message-item_avatar"
-      :size="30"
+      :size="32"
     >
       {{
         isExternal(props.messageInfo.talkerAvatar)
@@ -32,7 +32,7 @@
           {{ formatMessageDate(props.messageInfo.messageTimestamp) }}
         </div>
         <div class="message-template_detail-name">
-          {{ props.messageInfo.talkerName }}
+          {{ props.messageInfo.talkerName || '匿名用户' }}
         </div>
         <div
           v-if="botStore.botInfo.id !== props.messageInfo.talkerId"
@@ -109,9 +109,7 @@
             isExternal(props.messageInfo.messageContent)
           "
           :src="props.messageInfo.messageContent"
-          :preview-src-list="[props.messageInfo.messageContent]"
-          preview-teleported
-          class="message-type-5"
+          width="345"
         />
         <a-image
           v-else-if="
@@ -119,9 +117,7 @@
             isExternal(props.messageInfo.messageContent)
           "
           :src="props.messageInfo.messageContent"
-          :preview-src-list="[props.messageInfo.messageContent]"
-          preview-teleported
-          class="message-type-6"
+          width="345"
         />
         <div
           v-else-if="props.messageInfo.messageType === 7"
@@ -202,7 +198,7 @@
             </div>
             <a-image
               :src="JSON.parse(props.messageInfo.messageContent).thumbnailUrl"
-              class="message-type-14_thumbnailUrl"
+              width="50"
             >
             </a-image>
           </div>
@@ -236,7 +232,7 @@
           : ''
       "
       class="message-item_avatar"
-      :size="30"
+      :size="32"
     >
       {{
         isExternal(props.messageInfo.talkerAvatar)
@@ -423,13 +419,6 @@ const formatMessageDate = (date) => {
         }
       }
 
-      .message-type-5 {
-        width: 250;
-      }
-
-      .message-type-6 {
-        width: 250px;
-      }
       .message-type-7 {
         line-height: 20px;
       }
@@ -486,21 +475,6 @@ const formatMessageDate = (date) => {
         .message-type-14_description-thumbnailUrl {
           display: flex;
           justify-content: space-between;
-
-          .message-type-14_thumbnailUrl {
-            width: 50px;
-            height: 50px;
-
-            .message-type-14_thumbnailUrl-slot {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 50px;
-              height: 50px;
-              background-color: #f5f7fa;
-              color: #909399;
-            }
-          }
         }
       }
 

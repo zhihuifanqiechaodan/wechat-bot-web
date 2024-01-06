@@ -14,7 +14,7 @@
       </a-list>
       <MessageContentReply />
     </div>
-    <div v-else class="empty">Chat Bot</div>
+    <div v-else class="empty">Wechat Bot</div>
   </div>
 </template>
 

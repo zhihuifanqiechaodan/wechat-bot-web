@@ -1,5 +1,5 @@
 import { useBotStore } from '@/store/bot';
-// import botApi from '@/api/bot';
+import { addBotSay } from '@/api/bot.api';
 
 export default () => {
   const botStore = useBotStore();
@@ -61,12 +61,10 @@ export default () => {
         default:
           break;
       }
-      resolve() || reject();
 
-      // botApi
-      //   .addBotSay(messageInfo)
-      //   .then((value) => resolve(value))
-      //   .catch((reason) => reject(reason));
+      addBotSay(messageInfo)
+        .then((value) => resolve(value))
+        .catch((reason) => reject(reason));
     });
   };
 

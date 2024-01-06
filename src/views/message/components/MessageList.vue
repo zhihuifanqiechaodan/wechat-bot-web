@@ -19,7 +19,7 @@
                   :imageUrl="
                     isExternal(item.contactAvatar) ? item.contactAvatar : ''
                   "
-                  :size="30"
+                  :size="36"
                 >
                   {{
                     isExternal(item.contactAvatar) ? '' : item.contactName[0]
@@ -67,7 +67,7 @@ const filterMessage = (message) => {
   let text = '';
   switch (message.messageType) {
     case 1:
-      text = `[文件]${JSON.parse(message.messageContent)._name}`;
+      text = '[文件]';
       break;
     case 2:
       text = '[语音]';
@@ -95,7 +95,7 @@ const filterMessage = (message) => {
       text = '[位置]';
       break;
     case 9:
-      text = `[小程序]${JSON.parse(message.messageContent).title}`;
+      text = '[小程序]';
       break;
     case 10:
       text = message.messageContent;
@@ -110,7 +110,7 @@ const filterMessage = (message) => {
       text = message.messageContent;
       break;
     case 14:
-      text = `[链接]${JSON.parse(message.messageContent).title}`;
+      text = '[链接]';
       break;
     case 15:
       text = '[视频]';
@@ -207,6 +207,7 @@ const handleMessageClick = async (message) => {
   height: 100%;
   padding: 10px 0;
   box-sizing: border-box;
+  user-select: none;
 
   .message-box {
     height: 100%;

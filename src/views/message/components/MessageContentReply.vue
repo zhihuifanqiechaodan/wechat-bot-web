@@ -1,10 +1,11 @@
 <template>
-  <div class="message-content-reply">
+  <a-spin :loading="loading" class="message-content-reply">
     <div class="input-wrapper">
       <a-input
         @keyup.enter="handleSendText"
         v-model="messageContent"
         placeholder="Input message here and press enter to send"
+        size="large"
       />
     </div>
 
@@ -15,35 +16,56 @@
     >
       <svg-icon name="send" class="send-icon" />
     </div>
-  </div>
+  </a-spin>
 </template>
 
 <script setup>
-import { reactive, toRefs } from 'vue';
 import useMessageHook from '@/hooks/message.hook';
 import SvgIcon from '@/components/SvgIcon';
+import { useBotStore } from '@/store/bot';
+import { notSupportPuppets } from '@/config/bot.config';
+import loadingHook from '@/hooks/loading.hook';
+import { ref } from 'vue';
 
 const messageHook = useMessageHook();
+const botStore = useBotStore();
+const { loading, setLoading } = loadingHook();
 
-const state = reactive({
-  messageContent: '',
-  loading: false
-});
-
-const { messageContent } = toRefs(state);
+const messageContent = ref('');
 
 const handleSendText = async () => {
-  if (state.messageContent.trim()) {
-    state.loading = true;
+  if (messageContent.value.trim()) {
+    setLoading(true);
 
     await messageHook.say({
-      messageContent: state.messageContent,
+      messageContent: messageContent.value,
       messageType: 7
     });
 
-    state.messageContent = '';
+    if (notSupportPuppets.includes(botStore.botInfo.puppet)) {
+      if (botStore.messageHistoryInfo[botStore.currentMessageInfo.contactId]) {
+        botStore.messageHistoryInfo[botStore.currentMessageInfo.contactId].push(
+          {
+            contactId: botStore.currentMessageInfo.contactId,
+            contactName: botStore.currentMessageInfo.contactAvatar,
+            contactAvatar: botStore.currentMessageInfo.contactAvatar,
+            contactType: 0,
+            talkerId: botStore.botInfo.id,
+            talkerName: botStore.botInfo.name,
+            talkerAvatar: botStore.botInfo.avatar,
+            messageId: new Date().getTime(),
+            messageType: 7,
+            messageContent: messageContent.value,
+            messageTimestamp: new Date().getTime(),
+            unreadMessageCount: 0
+          }
+        );
+      }
+    }
 
-    state.loading = false;
+    messageContent.value = '';
+
+    setLoading(false);
   }
 };
 </script>

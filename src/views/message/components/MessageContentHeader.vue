@@ -8,7 +8,7 @@
               ? botStore.currentMessageInfo.contactAvatar
               : ''
           "
-          :size="34"
+          :size="36"
         >
           {{
             isExternal(botStore.currentMessageInfo.contactAvatar)

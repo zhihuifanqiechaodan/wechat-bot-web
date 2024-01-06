@@ -26,3 +26,12 @@ export const addBotStart = () => {
 export const getBotAuthQrcode = () => {
   return request({ url: '/bot/authQrcode', method: 'get' });
 };
+
+/**
+ * @method addBotSay
+ * @param {*} data
+ * @returns
+ */
+export const addBotSay = (data) => {
+  return request({ url: '/bot/say', method: 'post', data });
+};

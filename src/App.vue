@@ -62,6 +62,12 @@ currentInstance.proxy.$socket.on('onMessage', ({ messageInfo }) => {
   }
 });
 
+currentInstance.proxy.$socket.on('onLogout', () => {
+  botStore.setProcessStatus({ processStatus: false });
+
+  visible.value = true;
+});
+
 currentInstance.proxy.$socket.on('stopProcess', () => {
   botStore.setProcessStatus({ processStatus: false });
 
