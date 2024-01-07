@@ -35,3 +35,12 @@ export const getBotAuthQrcode = () => {
 export const addBotSay = (data) => {
   return request({ url: '/bot/say', method: 'post', data });
 };
+
+/**
+ * @method addBotLogout
+ * @param {*} data
+ * @returns
+ */
+export const addBotLogout = (data) => {
+  return request({ url: '/bot/logout', method: 'post', data });
+};

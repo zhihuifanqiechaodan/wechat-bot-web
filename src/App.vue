@@ -66,12 +66,14 @@ currentInstance.proxy.$socket.on('onLogout', () => {
   botStore.setProcessStatus({ processStatus: false });
 
   visible.value = true;
+  console.log(1);
 });
 
 currentInstance.proxy.$socket.on('stopProcess', () => {
   botStore.setProcessStatus({ processStatus: false });
 
   visible.value = true;
+  console.log(2);
 });
 
 const handleOk = () => {

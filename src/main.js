@@ -15,6 +15,8 @@ import '@arco-design/web-vue/es/message/style/css';
 
 import 'virtual:svg-icons-register';
 
+import 'normalize.css'; // a modern alternative to CSS resets
+
 const app = createApp(App);
 
 Message._context = app._context;

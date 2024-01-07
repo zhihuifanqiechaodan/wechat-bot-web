@@ -21,6 +21,10 @@ const asyncRoutes = [
       {
         path: 'message',
         component: () => import('@/views/message/message')
+      },
+      {
+        path: 'setting',
+        component: () => import('@/views/setting/setting')
       }
     ]
   }
