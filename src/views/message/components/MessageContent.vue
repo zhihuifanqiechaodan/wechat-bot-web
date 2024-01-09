@@ -7,11 +7,12 @@
     >
       <MessageContentHeader />
       <a-list
+        ref="messageHistoryListRef"
         :virtualListProps="{ height: 500 }"
         :data="botStore.currentMessageHistoryList"
       >
         <template #item="{ item }">
-          <a-list-item :key="item.messageId">
+          <a-list-item :key="item.messageId" class="message-history-item">
             <MessageTemplate :messageInfo="item" />
           </a-list-item>
         </template>
@@ -31,12 +32,27 @@ import { useBotStore } from '@/store/bot';
 import { ref } from 'vue';
 import RoomConfigDrawer from './RoomConfigDrawer.vue';
 import { provide } from 'vue';
+import { watch } from 'vue';
 
 const botStore = useBotStore();
 
 const roomConfigDrawerVisible = ref(false);
 
 provide('roomConfigDrawerVisible', roomConfigDrawerVisible);
+
+const messageHistoryListRef = ref(null);
+
+watch(
+  () => botStore.currentMessageInfo,
+  () => {
+    console.log(messageHistoryListRef);
+    messageHistoryListRef.value.scrollIntoView({
+      index: botStore.currentMessageHistoryList.findIndex(
+        (item) => item.messageId === botStore.currentMessageInfo.messageId
+      )
+    });
+  }
+);
 </script>
 
 <style lang="less" scoped>

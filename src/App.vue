@@ -18,6 +18,7 @@ import { getCurrentInstance } from 'vue';
 import { useBotStore } from '@/store/bot';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { Notification } from '@arco-design/web-vue';
 
 const router = useRouter();
 const currentInstance = getCurrentInstance();
@@ -66,14 +67,34 @@ currentInstance.proxy.$socket.on('onLogout', () => {
   botStore.setProcessStatus({ processStatus: false });
 
   visible.value = true;
-  console.log(1);
 });
 
 currentInstance.proxy.$socket.on('stopProcess', () => {
   botStore.setProcessStatus({ processStatus: false });
 
   visible.value = true;
-  console.log(2);
+});
+
+currentInstance.proxy.$socket.on('onRoomTopic', ({ editRoomTopicInfo }) => {
+  const { roomPayload, topic, changerPayload } = editRoomTopicInfo;
+
+  if (botStore.currentMessageInfo?.contactId === roomPayload.id) {
+    botStore.currentMessageInfo.contactName = topic;
+  }
+
+  const index = botStore.messageList.findIndex(
+    (item) => item.contactId === roomPayload.id
+  );
+
+  if (index !== -1) {
+    botStore.messageList[index].contactName = topic;
+
+    Notification.info({
+      title: '群名称变更',
+      content: `${changerPayload.name}修改群名为"${topic}"`,
+      duration: 5 * 1000
+    });
+  }
 });
 
 const handleOk = () => {
