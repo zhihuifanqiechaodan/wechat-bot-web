@@ -1,22 +1,23 @@
 <template>
-  <a-spin :loading="loading" class="message-content-reply">
-    <div class="input-wrapper">
-      <a-input
-        @keyup.enter="handleSendText"
-        v-model="messageContent"
-        placeholder="Input message here and press enter to send"
-        size="large"
-      />
-    </div>
-
-    <div
-      @click="handleSendText"
-      class="send-wrapper"
-      :class="{ 'end-wrapper_active': messageContent }"
-    >
-      <svg-icon name="send" class="send-icon" />
-    </div>
-  </a-spin>
+  <div class="message-content-reply">
+    <a-spin :loading="loading" class="reply-spin">
+      <div class="input-wrapper">
+        <a-input
+          @keyup.enter="handleSendText"
+          v-model="messageContent"
+          placeholder="Input message here and press enter to send"
+          size="large"
+        />
+      </div>
+      <div
+        @click="handleSendText"
+        class="send-wrapper"
+        :class="{ 'end-wrapper_active': messageContent }"
+      >
+        <svg-icon name="send" class="send-icon" />
+      </div>
+    </a-spin>
+  </div>
 </template>
 
 <script setup>
@@ -72,49 +73,54 @@ const handleSendText = async () => {
 
 <style lang="less" scoped>
 .message-content-reply {
-  display: flex;
-  align-items: center;
-  height: 50px;
+  height: 70px;
   padding: 0 20px;
 
-  .input-wrapper {
-    position: relative;
-    flex: 1;
-    padding-right: 10px;
-
-    .icon-wrapper {
-      position: absolute;
-      right: 40px;
-      top: 0;
-      display: flex;
-      align-items: center;
-      height: 100%;
-      font-size: 24px;
-      color: #adafb1;
-
-      .image-icon {
-        cursor: pointer;
-      }
-    }
-  }
-
-  .send-wrapper {
+  .reply-spin {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background-color: #296eff;
+    height: 50px;
     border-radius: 10px;
-    opacity: 0.3;
 
-    &.end-wrapper_active {
-      opacity: 1;
+    .input-wrapper {
+      position: relative;
+      flex: 1;
+      padding-right: 10px;
+
+      .icon-wrapper {
+        position: absolute;
+        right: 40px;
+        top: 0;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        font-size: 24px;
+        color: #adafb1;
+
+        .image-icon {
+          cursor: pointer;
+        }
+      }
     }
 
-    .send-icon {
-      font-size: 24px;
-      color: #ffffff;
+    .send-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background-color: #296eff;
+      border-radius: 10px;
+      opacity: 0.3;
+
+      &.end-wrapper_active {
+        opacity: 1;
+      }
+
+      .send-icon {
+        font-size: 24px;
+        color: #ffffff;
+      }
     }
   }
 }

@@ -1,9 +1,13 @@
 <template>
   <div class="message-content">
-    <div v-if="botStore.currentMessageInfo" class="message-content-box">
+    <div
+      v-if="botStore.currentMessageInfo"
+      class="message-content-box"
+      id="message-content-box"
+    >
       <MessageContentHeader />
       <a-list
-        :virtualListProps="{ height: 520 }"
+        :virtualListProps="{ height: 500 }"
         :data="botStore.currentMessageHistoryList"
       >
         <template #item="{ item }">
@@ -16,6 +20,7 @@
     </div>
     <div v-else class="empty">Wechat Bot</div>
   </div>
+  <RoomConfigDrawer />
 </template>
 
 <script setup>
@@ -23,8 +28,15 @@ import MessageTemplate from './MessageTemplate.vue';
 import MessageContentHeader from './MessageContentHeader.vue';
 import MessageContentReply from './MessageContentReply.vue';
 import { useBotStore } from '@/store/bot';
+import { ref } from 'vue';
+import RoomConfigDrawer from './RoomConfigDrawer.vue';
+import { provide } from 'vue';
 
 const botStore = useBotStore();
+
+const roomConfigDrawerVisible = ref(false);
+
+provide('roomConfigDrawerVisible', roomConfigDrawerVisible);
 </script>
 
 <style lang="less" scoped>
@@ -34,6 +46,7 @@ const botStore = useBotStore();
   box-sizing: border-box;
 
   .message-content-box {
+    position: relative;
     background-color: #ffffff;
     border-radius: 10px;
   }

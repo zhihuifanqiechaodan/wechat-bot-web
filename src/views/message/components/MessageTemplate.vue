@@ -280,12 +280,7 @@ const formatMessageDate = (date) => {
 <style lang="less" scoped>
 .message-template {
   display: flex;
-  padding: 0 20px;
-  padding-top: 20px;
-
-  &:last-child {
-    padding-bottom: 20px;
-  }
+  padding: 20px;
 
   &.message-template_left {
     .message-template_detail {
@@ -378,7 +373,6 @@ const formatMessageDate = (date) => {
           flex: 1;
           margin-right: 10px;
           font-weight: 500;
-          line-height: 20px;
         }
 
         .message-type-1_svg {
@@ -420,7 +414,8 @@ const formatMessageDate = (date) => {
       }
 
       .message-type-7 {
-        line-height: 20px;
+        white-space: pre-wrap;
+        word-break: break-all;
       }
 
       .message-type-9 {

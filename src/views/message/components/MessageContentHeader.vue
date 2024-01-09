@@ -16,13 +16,11 @@
               : botStore.currentMessageInfo.contactName[0]
           }}
         </a-avatar>
-        <div class="header-wrapper-left_name-message ellipsis">
-          <div class="header-wrapper-left_name ellipsis">
-            {{ botStore.currentMessageInfo.contactName }}
-          </div>
+        <div class="header-wrapper-left_name ellipsis">
+          {{ botStore.currentMessageInfo.contactName }}
         </div>
       </div>
-      <div class="header-wrapper_right">设置功能</div>
+      <RoomFeaturePopover />
     </div>
   </div>
 </template>
@@ -30,6 +28,7 @@
 <script setup>
 import { useBotStore } from '@/store/bot';
 import { isExternal } from '@/utils/validate';
+import RoomFeaturePopover from './RoomFeaturePopover.vue';
 
 const botStore = useBotStore();
 </script>
@@ -41,7 +40,8 @@ const botStore = useBotStore();
     justify-content: space-between;
     align-items: center;
     height: 50px;
-    padding: 0 20px;
+    padding-left: 15px;
+    padding-right: 10px;
     box-sizing: border-box;
     border-bottom: 0.5px solid #999999;
     .header-wrapper-left {
@@ -50,17 +50,12 @@ const botStore = useBotStore();
       align-items: center;
       box-sizing: border-box;
 
-      .header-wrapper-left_name-message {
+      .header-wrapper-left_name {
+        flex: 1;
+        width: 0;
         padding-left: 10px;
-
-        .header-wrapper-left_name {
-          font-weight: bold;
-        }
+        font-weight: bold;
       }
-    }
-
-    .header-wrapper_right {
-      padding-left: 100px;
     }
   }
 }

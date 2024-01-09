@@ -1,6 +1,10 @@
 <template>
   <div class="setting-container">
-    <div class="setting-box"></div>
+    <div class="setting-box">
+      <div style="width: 200px">
+        ~wherenode/Users/SolidZORO/Library/Caches/fnm_multishells/28792_1693205618260/bin/node
+      </div>
+    </div>
   </div>
 </template>
 

@@ -80,6 +80,7 @@ const handleSetting = () => {
     }
 
     .setting-item {
+      height: 40px;
       padding: 10px;
       cursor: pointer;
       border-radius: 10px;
