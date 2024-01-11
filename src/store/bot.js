@@ -6,7 +6,7 @@ export const useBotStore = defineStore('bot', {
     return {
       processStatus: false,
       qrcode: '',
-      botInfo: useStorage('botPayload', {}).value,
+      botPayload: useStorage('botPayload', {}).value,
       messageList: [],
       messageHistoryInfo: {},
       currentMessageInfo: null,
@@ -33,15 +33,15 @@ export const useBotStore = defineStore('bot', {
       this.qrcode = qrcode;
     },
     /**
-     * @method setBotInfo
+     * @method setBotPayload
      * @param {Object} options
-     * @param {Boolean} options.botInfo
+     * @param {Boolean} options.botPayload
      * @returns
      */
-    setBotInfo({ botInfo }) {
-      this.botInfo = botInfo;
+    setBotPayload({ botPayload }) {
+      this.botPayload = botPayload;
 
-      useStorage('botPayload', botInfo).value = botInfo;
+      useStorage('botPayload', botPayload).value = botPayload;
     }
   }
 });

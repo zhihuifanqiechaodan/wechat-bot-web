@@ -23,6 +23,11 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+body {
+  background: url('/src/icons/bg.svg');
+  background-size: cover;
+}
+
 #app {
   position: absolute;
   left: 50%;

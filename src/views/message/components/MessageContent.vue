@@ -29,10 +29,8 @@ import MessageTemplate from './MessageTemplate.vue';
 import MessageContentHeader from './MessageContentHeader.vue';
 import MessageContentReply from './MessageContentReply.vue';
 import { useBotStore } from '@/store/bot';
-import { ref } from 'vue';
+import { ref, provide, watch, nextTick } from 'vue';
 import RoomConfigDrawer from './RoomConfigDrawer.vue';
-import { provide } from 'vue';
-import { watch } from 'vue';
 
 const botStore = useBotStore();
 
@@ -43,13 +41,15 @@ provide('roomConfigDrawerVisible', roomConfigDrawerVisible);
 const messageHistoryListRef = ref(null);
 
 watch(
-  () => botStore.currentMessageInfo,
+  () => botStore.currentMessageInfo?.contactName,
   () => {
-    console.log(messageHistoryListRef);
-    messageHistoryListRef.value.scrollIntoView({
-      index: botStore.currentMessageHistoryList.findIndex(
-        (item) => item.messageId === botStore.currentMessageInfo.messageId
-      )
+    nextTick(() => {
+      messageHistoryListRef.value.scrollIntoView({
+        index: botStore.currentMessageHistoryList.findIndex(
+          (item) => item.messageId === botStore.currentMessageInfo.messageId
+        ),
+        align: 'bottom'
+      });
     });
   }
 );

@@ -3,12 +3,16 @@
     <div class="bot-avatar">
       <a-avatar
         :imageUrl="
-          isExternal(botStore.botInfo.avatar) ? botStore.botInfo.avatar : ''
+          isExternal(botStore.botPayload.avatar)
+            ? botStore.botPayload.avatar
+            : ''
         "
         :size="30"
       >
         {{
-          isExternal(botStore.botInfo.avatar) ? '' : botStore.botInfo.name[0]
+          isExternal(botStore.botPayload.avatar)
+            ? ''
+            : botStore.botPayload.name[0]
         }}
       </a-avatar>
     </div>
@@ -17,17 +21,19 @@
         <div class="bot-info">
           <a-avatar
             :imageUrl="
-              isExternal(botStore.botInfo.avatar) ? botStore.botInfo.avatar : ''
+              isExternal(botStore.botPayload.avatar)
+                ? botStore.botPayload.avatar
+                : ''
             "
             :size="55"
           >
             {{
-              isExternal(botStore.botInfo.avatar)
+              isExternal(botStore.botPayload.avatar)
                 ? ''
-                : botStore.botInfo.name[0]
+                : botStore.botPayload.name[0]
             }}
           </a-avatar>
-          <div class="bot-name">{{ botStore.botInfo.name }}</div>
+          <div class="bot-name">{{ botStore.botPayload.name }}</div>
         </div>
         <a-divider />
         <div @click="handleSetting" class="setting-item">设置</div>

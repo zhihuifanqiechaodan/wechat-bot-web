@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-wrapper">
+  <div class="layout-wrapper" id="layout-wrapper">
     <sidebar />
     <div class="app-main">
       <router-view></router-view>
@@ -18,10 +18,18 @@ import Sidebar from './components/Sidebar.vue';
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  background-color: #e6eef9;
+  background-color: #d1d6e2;
 
   .app-main {
     flex: 1;
+  }
+}
+</style>
+
+<style lang="less">
+.layout-wrapper {
+  .arco-drawer-container {
+    z-index: 1001 !important;
   }
 }
 </style>

@@ -43,7 +43,7 @@ const handleSendText = async () => {
       messageType: 7
     });
 
-    if (notSupportPuppets.includes(botStore.botInfo.puppet)) {
+    if (notSupportPuppets.includes(botStore.botPayload.puppet)) {
       if (botStore.messageHistoryInfo[botStore.currentMessageInfo.contactId]) {
         botStore.messageHistoryInfo[botStore.currentMessageInfo.contactId].push(
           {
@@ -51,9 +51,9 @@ const handleSendText = async () => {
             contactName: botStore.currentMessageInfo.contactAvatar,
             contactAvatar: botStore.currentMessageInfo.contactAvatar,
             contactType: 0,
-            talkerId: botStore.botInfo.id,
-            talkerName: botStore.botInfo.name,
-            talkerAvatar: botStore.botInfo.avatar,
+            talkerId: botStore.botPayload.id,
+            talkerName: botStore.botPayload.name,
+            talkerAvatar: botStore.botPayload.avatar,
             messageId: new Date().getTime(),
             messageType: 7,
             messageContent: messageContent.value,

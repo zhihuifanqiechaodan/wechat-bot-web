@@ -2,13 +2,13 @@
   <div
     class="message-template"
     :class="[
-      botStore.botInfo.id === props.messageInfo.talkerId
+      botStore.botPayload.id === props.messageInfo.talkerId
         ? 'message-template_right'
         : 'message-template_left'
     ]"
   >
     <a-avatar
-      v-if="botStore.botInfo.id !== props.messageInfo.talkerId"
+      v-if="botStore.botPayload.id !== props.messageInfo.talkerId"
       :imageUrl="
         isExternal(props.messageInfo.talkerAvatar)
           ? props.messageInfo.talkerAvatar
@@ -26,7 +26,7 @@
     <div class="message-template_detail">
       <div class="message-template_detail-name-date">
         <div
-          v-if="botStore.botInfo.id === props.messageInfo.talkerId"
+          v-if="botStore.botPayload.id === props.messageInfo.talkerId"
           class="message-template_detail-date"
         >
           {{ formatMessageDate(props.messageInfo.messageTimestamp) }}
@@ -35,7 +35,7 @@
           {{ props.messageInfo.talkerName || '匿名用户' }}
         </div>
         <div
-          v-if="botStore.botInfo.id !== props.messageInfo.talkerId"
+          v-if="botStore.botPayload.id !== props.messageInfo.talkerId"
           class="message-template_detail-date"
         >
           {{ formatMessageDate(props.messageInfo.messageTimestamp) }}
@@ -110,14 +110,13 @@
           "
           :src="props.messageInfo.messageContent"
           width="345"
+          fit="cover"
         />
         <a-image
-          v-else-if="
-            props.messageInfo.messageType === 6 &&
-            isExternal(props.messageInfo.messageContent)
-          "
+          v-else-if="props.messageInfo.messageType === 6"
           :src="props.messageInfo.messageContent"
           width="345"
+          fit="cover"
         />
         <div
           v-else-if="props.messageInfo.messageType === 7"
@@ -217,7 +216,7 @@
           {{ props.messageInfo.messageContent }}
         </div>
         <div
-          v-if="botStore.botInfo.id === props.messageInfo.talkerId"
+          v-if="botStore.botPayload.id === props.messageInfo.talkerId"
           class="self-message-date"
         >
           {{ formatMessageDate(props.messageInfo.messageTimestamp) }}
@@ -225,7 +224,7 @@
       </div>
     </div>
     <a-avatar
-      v-if="botStore.botInfo.id === props.messageInfo.talkerId"
+      v-if="botStore.botPayload.id === props.messageInfo.talkerId"
       :imageUrl="
         isExternal(props.messageInfo.talkerAvatar)
           ? props.messageInfo.talkerAvatar

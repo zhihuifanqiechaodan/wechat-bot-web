@@ -14,11 +14,11 @@
 </template>
 
 <script setup>
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, ref, onMounted } from 'vue';
 import { useBotStore } from '@/store/bot';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
 import { Notification } from '@arco-design/web-vue';
+import { getBotInfo } from '@/api/bot.api';
 
 const router = useRouter();
 const currentInstance = getCurrentInstance();
@@ -31,7 +31,7 @@ currentInstance.proxy.$socket.on('qrcode', ({ qrcode }) => {
 });
 
 currentInstance.proxy.$socket.on('onLogin', ({ botPayload }) => {
-  botStore.setBotInfo({ botInfo: botPayload });
+  botStore.setBotPayload({ botPayload: botPayload });
 
   router.replace('/bot/message');
 });
@@ -95,6 +95,12 @@ currentInstance.proxy.$socket.on('onRoomTopic', ({ editRoomTopicInfo }) => {
       duration: 5 * 1000
     });
   }
+});
+
+onMounted(async () => {
+  const { botPayload } = await getBotInfo();
+
+  botStore.setBotPayload({ botPayload });
 });
 
 const handleOk = () => {

@@ -20,7 +20,15 @@
           {{ botStore.currentMessageInfo.contactName }}
         </div>
       </div>
-      <RoomFeaturePopover />
+      <a-button
+        v-if="botStore.currentMessageInfo.contactType === 1"
+        @click="handleSetting"
+        type="text"
+      >
+        <template #icon>
+          <icon-more />
+        </template>
+      </a-button>
     </div>
   </div>
 </template>
@@ -28,9 +36,16 @@
 <script setup>
 import { useBotStore } from '@/store/bot';
 import { isExternal } from '@/utils/validate';
-import RoomFeaturePopover from './RoomFeaturePopover.vue';
+import { IconMore } from '@arco-design/web-vue/es/icon';
+import { inject } from 'vue';
 
 const botStore = useBotStore();
+
+const roomConfigDrawerVisible = inject('roomConfigDrawerVisible');
+
+const handleSetting = () => {
+  roomConfigDrawerVisible.value = true;
+};
 </script>
 
 <style lang="less" scoped>

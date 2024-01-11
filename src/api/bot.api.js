@@ -5,8 +5,8 @@ import { request } from '@/utils/request';
  * @param {*} data
  * @returns
  */
-export const getBotStatus = () => {
-  return request({ url: '/bot/status', method: 'get' });
+export const getBotStatus = (data) => {
+  return request({ url: '/bot/status', method: 'get', params: data });
 };
 
 /**
@@ -23,8 +23,8 @@ export const addBotStart = () => {
  * @param {*} data
  * @returns
  */
-export const getBotAuthQrcode = () => {
-  return request({ url: '/bot/authQrcode', method: 'get' });
+export const getBotAuthQrcode = (data) => {
+  return request({ url: '/bot/authQrcode', method: 'get', params: data });
 };
 
 /**
@@ -43,4 +43,22 @@ export const addBotSay = (data) => {
  */
 export const addBotLogout = (data) => {
   return request({ url: '/bot/logout', method: 'post', data });
+};
+
+/**
+ * @method getBotInfo
+ * @param {*} data
+ * @returns
+ */
+export const getBotInfo = (data) => {
+  return request({ url: '/bot/info', method: 'get', params: data });
+};
+
+/**
+ * @method addBotEditTopic
+ * @param {*} data
+ * @returns
+ */
+export const addBotEditTopic = (data) => {
+  return request({ url: '/bot/editTopic', method: 'post', data });
 };
