@@ -10,22 +10,37 @@
   >
     <template #title> 设置 </template>
     <a-space v-if="botStore.currentMessageInfo" direction="vertical" fill>
-      <a-input
-        v-model="topic"
-        placeholder="Please enter something"
-        allow-clear
-        @change="handleContactNameChange"
+      <a-form
+        ref="formRef"
+        :model="state.contactConfig"
+        size="small"
+        auto-label-width
       >
-        <template #prepend> 群名称 </template>
-      </a-input>
+        <a-form-item label="群名称">
+          <a-input
+            v-model="topic"
+            placeholder="Please enter something"
+            allow-clear
+            @change="handleContactNameChange"
+          >
+          </a-input>
+        </a-form-item>
+        <a-form-item label="关键字回复">
+          <a-switch v-model="state.contactConfig.isKeywordReplyEnabled" />
+        </a-form-item>
+      </a-form>
     </a-space>
   </a-drawer>
 </template>
 
 <script setup>
-import { inject, ref } from 'vue';
+import { inject, ref, reactive } from 'vue';
 import { useBotStore } from '@/store/bot';
-import { addBotEditTopic } from '@/api/bot.api';
+import {
+  addBotEditTopic,
+  getBotContactConfig,
+  addBotContactConfigUpdate
+} from '@/api/bot.api';
 import loadingHook from '@/hooks/loading.hook';
 
 const { loading, setLoading } = loadingHook();
@@ -36,11 +51,30 @@ const roomConfigDrawerVisible = inject('roomConfigDrawerVisible');
 
 const topic = ref('');
 
-const onBeforeOpen = () => {
+const state = reactive({
+  contactConfig: {}
+});
+
+const onBeforeOpen = async () => {
   topic.value = botStore.currentMessageInfo?.contactName;
+
+  const { contactConfig } = await getBotContactConfig({
+    contactId: botStore.currentMessageInfo.contactId
+  });
+
+  state.contactConfig = contactConfig;
 };
 
-const handleOk = () => {
+const handleOk = async () => {
+  setLoading(true);
+
+  await addBotContactConfigUpdate({
+    contactConfig: state.contactConfig,
+    contactId: botStore.currentMessageInfo.contactId
+  });
+
+  setLoading(false);
+
   roomConfigDrawerVisible.value = false;
 };
 const handleCancel = () => {

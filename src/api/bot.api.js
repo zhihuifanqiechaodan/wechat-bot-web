@@ -62,3 +62,20 @@ export const getBotInfo = (data) => {
 export const addBotEditTopic = (data) => {
   return request({ url: '/bot/editTopic', method: 'post', data });
 };
+/**
+ * @method addBotContactConfig
+ * @param {*} data
+ * @returns
+ */
+export const getBotContactConfig = (data) => {
+  return request({ url: '/bot/contactConfig', method: 'get', params: data });
+};
+
+/**
+ * @method addBotContactConfigUpdate
+ * @param {*} data
+ * @returns
+ */
+export const addBotContactConfigUpdate = (data) => {
+  return request({ url: '/bot/contactConfig/update', method: 'post', data });
+};

@@ -47,8 +47,7 @@ watch(
       messageHistoryListRef.value.scrollIntoView({
         index: botStore.currentMessageHistoryList.findIndex(
           (item) => item.messageId === botStore.currentMessageInfo.messageId
-        ),
-        align: 'bottom'
+        )
       });
     });
   }
